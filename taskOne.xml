@@ -1,0 +1,12 @@
+<suite name="suiteTest">
+<test name="test">
+<groups>
+<run>
+<include name="Smoke"/>
+</run>
+</groups>
+<classes>
+<class name="com.Class03.TaskOne"/>
+</classes>
+</test>
+</suite>
