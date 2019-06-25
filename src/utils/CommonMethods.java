@@ -1,6 +1,6 @@
 package utils;
 
-import java.io.File;
+import java.io.File;	
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -16,6 +16,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -26,7 +28,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class CommonMethods {
 
 	public static WebDriver driver;
-
+	public static ChromeOptions options;
 	public static void setUpDriver(String browser, String url) {
 		if (browser.equalsIgnoreCase("chrome")) {
 			// For Windows
@@ -40,6 +42,13 @@ public class CommonMethods {
 		}else if (browser.equalsIgnoreCase("ie")) {
 			System.setProperty("webdriver.ie.driver", "src/drivers/IEDriverServer.exe");
 			driver = new InternetExplorerDriver();
+		}else if (browser.equalsIgnoreCase("opera")) {
+			System.setProperty("webdriver.opera.driver", "src/drivers/operaChromiumDriver.exe");
+			options =  new ChromeOptions();
+		}
+		else if (browser.equalsIgnoreCase("edge")) {
+			System.setProperty("webdriver.edge.driver", "src/drivers/MicrosoftWebDriver.exe");
+			driver = new EdgeDriver();
 		} else {
 			System.out.println("browser given is wrong");
 		}

@@ -2,26 +2,41 @@ package com.Class05;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import utils.CommonMethods;
 
 public class TaskOne extends CommonMethods {
 	
-	@BeforeMethod 
-	public void setUp() {
-	setUpDriver("chrome", "http://secure.smartbearsoftware.com/samples/TestComplete11/WebOrders/Process.aspx");	
-	driver.findElement(By.xpath("//input[contains(@id,'username')]")).sendKeys("Tester");
-	driver.findElement(By.xpath("//input[contains(@id,'password')]")).sendKeys("test");
-	driver.findElement(By.xpath("//input[contains(@id,'login_button')]")).click();
+	@Parameters({"browser","url","username","password"})
+	@BeforeMethod
+	public void setUp(String browserType, String url, String username, String password) {
+		
+		if(browserType.equalsIgnoreCase("chrome")) {
+			setUpDriver(browserType, url);	
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			driver.findElement(By.xpath("//input[contains(@id,'username')]")).sendKeys(username);
+			driver.findElement(By.xpath("//input[contains(@id,'login_button')]")).click();
+		}
+		else if(browserType.equalsIgnoreCase("firefox")) {
+			setUpDriver(browserType, url);	
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			driver.findElement(By.xpath("//input[contains(@id,'username')]")).sendKeys(username);
+			driver.findElement(By.xpath("//input[contains(@id,'password')]")).sendKeys(password);
+			driver.findElement(By.xpath("//input[contains(@id,'login_button')]")).click();
+		}
 
 	}
 
@@ -69,17 +84,19 @@ public class TaskOne extends CommonMethods {
 	driver.findElement(By.xpath("//input[contains(@value,'"+card+"')]")).click();
 	driver.findElement(By.xpath("//input[contains(@id,'TextBox6')]")).sendKeys(cardNr);
 	driver.findElement(By.xpath("//input[contains(@name,'TextBox1')]")).sendKeys(date);
-	if(customerName.contains("John Smith, Mary Smith")) {
-	takeScreenshot("Screenshots", "smartbearsoftwareUserOne");
+	if(customerName.contains("John Smith")) {
+	takeScreenshot("taskOne", "smartbearsoftwareUserOne");
 	}
 	else  {
-		takeScreenshot("Screenshots", "smartbearsoftwareUserTwo");
+		takeScreenshot("taskOne", "smartbearsoftwareUserTwo");
 	}
 	driver.findElement(By.xpath("//a[contains(@id,'InsertButton')]")).click();
-	
+		
+		
+		
 	}
 
-	@AfterMethod 
+	@AfterMethod
 	public void tearDown() {
 	driver.close();
 

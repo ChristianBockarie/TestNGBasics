@@ -18,8 +18,8 @@ public class SauceDemo extends CommonMethods{
 		setUpDriver("chrome", "https://www.saucedemo.com/");
 	}
 	
+	
 	@DataProvider(name ="sauceData")
-	@Test
 	public Object [] []  setUpData(){
 		Object [] [] data = new Object [4] [2];
 		
@@ -27,20 +27,19 @@ public class SauceDemo extends CommonMethods{
 		data [0] [1] ="secret_sauce";
 		
 		
-		data [1][0]="locked_out_user";
+		data [1] [0] ="problem_user";
 		data [1] [1] ="secret_sauce";
 		
 		
-		data [2] [0] ="problem_user";
-		data [2] [1] ="secret_sauce";
-		
-		
-		data[3][0]="performance_glitch_user";
-		data[3][1]="secret_sauce";
+		data[2][0]="performance_glitch_user";
+		data[2][1]="secret_sauce";
 		
 		
 		return data;
-	
+		
+		
+		
+		
 	}
 	
 	@Test(dataProvider ="sauceData")
@@ -55,8 +54,20 @@ public class SauceDemo extends CommonMethods{
 		
 	}
 	
+	
+	
+	
+	
 	@AfterMethod
 	public void tearDown() {
 		driver.close();
 	}
+	
+	
+	
+	
+	
+	
+	
+
 }
